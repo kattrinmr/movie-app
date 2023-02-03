@@ -2,8 +2,6 @@ package com.katerina.morozova
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

@@ -1,6 +1,7 @@
 package com.katerina.morozova.di
 
-import com.katerina.morozova.core.Constant
+import com.katerina.morozova.core.api.MovieApiService
+import com.katerina.morozova.core.utils.Constant
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -19,7 +20,7 @@ class NetworkModule {
                 val original = chain.request()
                 val requestBuilder = original.newBuilder()
                     .header("X-API-KEY", Constant.API_KEY)
-                    .header("Content-Type", "application/json")
+                    .header("accept", "application/json")
                 val request = requestBuilder.build()
                 chain.proceed(request)
             }
@@ -33,6 +34,11 @@ class NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
+    }
+
+    @Provides
+    fun provideApiService(retrofit: Retrofit): MovieApiService {
+        return retrofit.create(MovieApiService::class.java)
     }
 
 }
