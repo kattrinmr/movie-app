@@ -1,6 +1,9 @@
-package com.katerina.morozova.core.models
+package com.katerina.morozova.core.utils
 
-data class MovieDescriptionModel(
+import com.katerina.morozova.core.models.CountryModel
+import com.katerina.morozova.core.models.GenreModel
+
+data class MovieDescriptionResponse(
     val filmId: Int,
     val nameRu: String,
     val posterUrl: String,

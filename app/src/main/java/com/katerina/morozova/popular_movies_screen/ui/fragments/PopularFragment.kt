@@ -2,6 +2,7 @@ package com.katerina.morozova.popular_movies_screen.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,23 +11,21 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.MoviesApp
-import com.katerina.morozova.core.models.MovieModel
 import com.katerina.morozova.core.utils.NetworkResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentPopularBinding
-import com.katerina.morozova.popular_movies_screen.ui.adapters.ClickInterface
-import com.katerina.morozova.popular_movies_screen.ui.adapters.PopularMoviesAdapter
+import com.katerina.morozova.core.ui.adapters.MoviesAdapter
 import com.katerina.morozova.popular_movies_screen.ui.viewmodels.PopularMoviesViewModel
 import javax.inject.Inject
 
 class PopularFragment : Fragment() {
 
     private lateinit var binding: FragmentPopularBinding
-    lateinit var popularMoviesAdapter: PopularMoviesAdapter
+    private lateinit var moviesAdapter: MoviesAdapter
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory<PopularMoviesViewModel>
-    lateinit var viewModel: PopularMoviesViewModel
+    private lateinit var viewModel: PopularMoviesViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -36,10 +35,10 @@ class PopularFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentPopularBinding.inflate(inflater)
-        popularMoviesAdapter = PopularMoviesAdapter()
-        binding.rvMovies.adapter = popularMoviesAdapter
+        moviesAdapter = MoviesAdapter(openMovieDescription = this::openMovieDescription)
+        binding.rvMovies.adapter = moviesAdapter
         return binding.root
     }
 
@@ -56,20 +55,6 @@ class PopularFragment : Fragment() {
             findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToSearchFragment())
         }
 
-        popularMoviesAdapter.setItemClick(object : ClickInterface<MovieModel> {
-            override fun onClick(data: MovieModel) {
-                Toast.makeText(requireContext(), "Переход к описанию фильма", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        })
-
-//        popularMoviesAdapter.setItemLongClick(object : LongClickInterface<MovieModel> {
-//            override fun onLongClick(data: MovieModel) {
-//                Toast.makeText(requireContext(), "Типа добавили в избранное", Toast.LENGTH_SHORT)
-//                    .show()
-//            }
-//        })
-
         viewModel.movieModelResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResponse.Loading -> {
@@ -82,10 +67,19 @@ class PopularFragment : Fragment() {
                 }
 
                 is NetworkResponse.Success -> {
-                    popularMoviesAdapter.updateMovies(it.data)
+                    moviesAdapter.updateMovies(it.data)
                     binding.progressBar.isVisible = false
                 }
             }
         }
+    }
+
+    private fun openMovieDescription(movieId: String) {
+        findNavController().navigate(
+            PopularFragmentDirections.actionPopularFragmentToMovieDescriptionFragment2(movieId)
+        )
+
+//        Toast.makeText(requireContext(), "Переход к описанию фильма", Toast.LENGTH_SHORT)
+//            .show()
     }
 }

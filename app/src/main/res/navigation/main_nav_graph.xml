@@ -19,6 +19,9 @@
             android:id="@+id/action_popularFragment_to_searchFragment"
             app:destination="@id/searchFragment"
             app:launchSingleTop="false" />
+        <action
+            android:id="@+id/action_popularFragment_to_movieDescriptionFragment2"
+            app:destination="@id/movieDescriptionFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -33,6 +36,9 @@
             android:id="@+id/action_favoriteFragment_to_searchFragment"
             app:destination="@id/searchFragment"
             app:launchSingleTop="false" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_movieDescriptionFragment2"
+            app:destination="@id/movieDescriptionFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -47,5 +53,26 @@
             android:id="@+id/action_searchFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment"
             app:launchSingleTop="false" />
+        <action
+            android:id="@+id/action_searchFragment_to_movieDescriptionFragment"
+            app:destination="@id/movieDescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDescriptionFragment"
+        android:name="com.katerina.morozova.movie_description_screen.ui.fragments.MovieDescriptionFragment"
+        android:label="fragment_movie_description"
+        tools:layout="@layout/fragment_movie_description" >
+        <action
+            android:id="@+id/action_movieDescriptionFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/action_movieDescriptionFragment_to_popularFragment2"
+            app:destination="@id/popularFragment" />
+        <action
+            android:id="@+id/action_movieDescriptionFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <argument
+            android:name="movieId"
+            app:argType="string" />
     </fragment>
 </navigation>

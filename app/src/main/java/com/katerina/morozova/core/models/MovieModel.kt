@@ -4,12 +4,6 @@ data class MovieModel(
     val filmId: Int,
     val nameRu: String,
     val year: String,
-    val genres: List<Genre>,
+    val genres: List<GenreModel>,
     val posterUrl: String
 )
-
-data class Genre(val genre: String) {
-    override fun toString(): String {
-        return genre
-    }
-}

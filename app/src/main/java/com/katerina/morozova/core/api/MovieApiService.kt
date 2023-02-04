@@ -1,7 +1,9 @@
 package com.katerina.morozova.core.api
 
+import com.katerina.morozova.core.utils.MovieDescriptionResponse
 import com.katerina.morozova.core.utils.MovieResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApiService {
@@ -12,7 +14,7 @@ interface MovieApiService {
         @Query("page") page: Int = 1
     ): MovieResponse
 
-    //    @GET("films/{id}")
-    //    suspend fun getMovieDescription(@Path("id") id: Int): MovieDescriptionResponse
+    @GET("films/{id}")
+    suspend fun getMovieDescription(@Path("id") id: Int): MovieDescriptionResponse
 
 }
