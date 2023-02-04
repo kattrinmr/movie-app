@@ -22,8 +22,7 @@ class PopularMoviesRepositoryImpl @Inject constructor(
         var response = apiService.getMovies(page = 1)
         allMovies.addAll(response.films)
 
-        //val maxPage = response.pagesCount
-        val maxPage = 20
+        val maxPage = 10 // max = 20
 
         for (i in 2..maxPage) {
             response = apiService.getMovies(page = i)

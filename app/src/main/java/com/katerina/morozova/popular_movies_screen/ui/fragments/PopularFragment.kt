@@ -2,7 +2,6 @@ package com.katerina.morozova.popular_movies_screen.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,13 +37,14 @@ class PopularFragment : Fragment() {
     ): View {
         binding = FragmentPopularBinding.inflate(inflater)
         moviesAdapter = MoviesAdapter(openMovieDescription = this::openMovieDescription)
-        binding.rvMovies.adapter = moviesAdapter
+        binding.rvMovies.apply {
+            adapter = moviesAdapter
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel = viewModelFactory.getViewModel(this)
 
         binding.btnFavorites.setOnClickListener {
@@ -78,8 +78,5 @@ class PopularFragment : Fragment() {
         findNavController().navigate(
             PopularFragmentDirections.actionPopularFragmentToMovieDescriptionFragment2(movieId)
         )
-
-//        Toast.makeText(requireContext(), "Переход к описанию фильма", Toast.LENGTH_SHORT)
-//            .show()
     }
 }

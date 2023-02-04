@@ -3,8 +3,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/colorTextMain</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/colorTextSub</item>
-        <item name="android:statusBarColor" >@color/black</item>
+        <item name="android:statusBarColor" >#121212</item>
     </style>
 </resources>

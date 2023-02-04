@@ -2,6 +2,6 @@ package com.katerina.morozova.core.utils
 
 object Constant {
 
-    const val BASE_URL = "https://kinopoiskapiunofficial.tech/api/v2.2/"
-    const val API_KEY = "d2bf49f4-29ea-44ba-ab25-218be85e13e6"
+    const val BASE_URL = "https://kinopoiskapiunofficial.tech/api/"
+    const val API_KEY = "e30ffed0-76ab-4dd6-b41f-4c9da2b2735b"
 }

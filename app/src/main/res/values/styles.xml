@@ -3,7 +3,6 @@
 
     <style name="TextView_Title">
         <item name="android:layout_marginStart">@dimen/spacing_16</item>
-        <item name="android:layout_marginTop">@dimen/spacing_16</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/text_25</item>

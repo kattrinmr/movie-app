@@ -2,6 +2,7 @@ package com.katerina.morozova.movie_description_screen.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,7 @@ class MovieDescriptionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = viewModelFactory.getViewModel(this)
+        Log.d("MovieDescription", movieId)
         viewModel.fetchMovieDescription(movieId.toInt())
 
         binding.btnBack.setOnClickListener {
@@ -73,8 +75,9 @@ class MovieDescriptionFragment : Fragment() {
                         .centerCrop()
                         .into(binding.imgMoviePoster)
 
-                    binding.tvMovieTitle.text = it.data.nameRu
-                    binding.tvMovieDescription.text = it.data.description
+                    if (it.data.nameRu == null) binding.tvMovieTitle.text = it.data.nameEn
+                    else binding.tvMovieTitle.text = it.data.nameRu
+                    if (it.data.description != null) binding.tvMovieDescription.text = it.data.description
                     binding.tvMovieCountries.text = it.data.countries.joinToString(", ") { country ->
                         country.country
                     }

@@ -27,8 +27,10 @@ class MoviesAdapter(
             override fun areItemsTheSame(oldPosition: Int, newPosition: Int): Boolean {
                 return moviesList[oldPosition].filmId == movies[newPosition].filmId
             }
+
             override fun areContentsTheSame(oldPosition: Int, newPosition: Int): Boolean {
-                return moviesList[oldPosition].hashCode() == movies[newPosition].hashCode()
+                return (moviesList[oldPosition].filmId == movies[newPosition].filmId
+                        && moviesList[oldPosition].posterUrl == movies[newPosition].posterUrl)
             }
         }
 
@@ -59,7 +61,8 @@ class MoviesAdapter(
 
         override fun bind(movie: MovieModel, openMovieDescription: (movieId: String) -> Unit) {
             with(binding) {
-                tvMovieTitle.text = movie.nameRu
+                if (movie.nameRu == null) tvMovieTitle.text = movie.nameEn
+                else tvMovieTitle.text = movie.nameRu
 
                 tvMovieDescription.text =
                     "${movie.genres.joinToString(", ") { it.genre }} (${movie.year})"

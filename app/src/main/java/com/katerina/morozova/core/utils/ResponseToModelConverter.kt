@@ -6,6 +6,7 @@ fun MovieDescriptionResponse.toModel(): MovieDescriptionModel {
     return MovieDescriptionModel(
         this.filmId,
         this.nameRu,
+        this.nameEn,
         this.posterUrl,
         this.year,
         this.description,

@@ -4,6 +4,8 @@ import com.katerina.morozova.movie_description_screen.data.repositories.MovieDes
 import com.katerina.morozova.movie_description_screen.domain.repositories.MovieDescriptionRepository
 import com.katerina.morozova.popular_movies_screen.data.repositories.PopularMoviesRepositoryImpl
 import com.katerina.morozova.popular_movies_screen.domain.repositories.PopularMoviesRepository
+import com.katerina.morozova.popular_movies_screen.data.repositories.SearchPopularMoviesRepositoryImpl
+import com.katerina.morozova.popular_movies_screen.domain.repositories.SearchPopularMoviesRepository
 import dagger.Module
 import dagger.Provides
 
@@ -17,4 +19,8 @@ class RepositoriesModule {
     @Provides
     fun provideMovieDescriptionRepository(repositoryImpl: MovieDescriptionRepositoryImpl):
             MovieDescriptionRepository = repositoryImpl
+
+    @Provides
+    fun provideSearchMoviesRepository(repositoryImpl: SearchPopularMoviesRepositoryImpl):
+            SearchPopularMoviesRepository = repositoryImpl
 }

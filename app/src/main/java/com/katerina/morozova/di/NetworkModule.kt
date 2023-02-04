@@ -1,5 +1,7 @@
 package com.katerina.morozova.di
 
+import android.app.Application
+import android.content.Context
 import com.katerina.morozova.core.api.MovieApiService
 import com.katerina.morozova.core.utils.Constant
 import dagger.Module
@@ -11,6 +13,11 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
+
+    @Provides
+    fun provideContext(application: Application): Context {
+        return application
+    }
 
     @Singleton
     @Provides
@@ -40,5 +47,4 @@ class NetworkModule {
     fun provideApiService(retrofit: Retrofit): MovieApiService {
         return retrofit.create(MovieApiService::class.java)
     }
-
 }
