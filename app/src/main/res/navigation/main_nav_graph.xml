@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/popularFragment"
-        android:name="com.katerina.morozova.popular_movies_screen.ui.fragments.PopularFragment"
+        android:name="com.katerina.morozova.ui.fragments.PopularFragment"
         android:label="fragment_popular"
         tools:layout="@layout/fragment_popular" >
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.katerina.morozova.favorite_movies_screen.ui.fragments.FavoriteFragment"
+        android:name="com.katerina.morozova.ui.fragments.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" >
         <action
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchPopularMoviesFragment"
-        android:name="com.katerina.morozova.popular_movies_screen.ui.fragments.SearchPopularMoviesFragment"
+        android:name="com.katerina.morozova.ui.fragments.SearchPopularMoviesFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_popular_movies_search" >
         <action
@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieDescriptionFragment"
-        android:name="com.katerina.morozova.movie_description_screen.ui.fragments.MovieDescriptionFragment"
+        android:name="com.katerina.morozova.ui.fragments.MovieDescriptionFragment"
         android:label="fragment_movie_description"
         tools:layout="@layout/fragment_movie_description" >
         <action

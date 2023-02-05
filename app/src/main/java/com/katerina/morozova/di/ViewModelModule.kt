@@ -2,7 +2,7 @@ package com.katerina.morozova.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.katerina.morozova.core.utils.ViewModelFactory
+import com.katerina.morozova.data.utils.ViewModelFactory
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

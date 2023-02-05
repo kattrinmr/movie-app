@@ -2,8 +2,8 @@ package com.katerina.morozova.di
 
 import android.app.Application
 import androidx.room.Room
-import com.katerina.morozova.core.room.MovieDatabase
-import com.katerina.morozova.core.room.daos.MovieDao
+import com.katerina.morozova.data.room.MovieDatabase
+import com.katerina.morozova.data.room.daos.MovieDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

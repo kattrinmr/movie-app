@@ -1,11 +1,11 @@
 package com.katerina.morozova.di
 
-import com.katerina.morozova.movie_description_screen.data.repositories.MovieDescriptionRepositoryImpl
-import com.katerina.morozova.movie_description_screen.domain.repositories.MovieDescriptionRepository
-import com.katerina.morozova.popular_movies_screen.data.repositories.PopularMoviesRepositoryImpl
-import com.katerina.morozova.popular_movies_screen.domain.repositories.PopularMoviesRepository
-import com.katerina.morozova.popular_movies_screen.data.repositories.SearchPopularMoviesRepositoryImpl
-import com.katerina.morozova.popular_movies_screen.domain.repositories.SearchPopularMoviesRepository
+import com.katerina.morozova.data.repositories.MovieDescriptionRepositoryImpl
+import com.katerina.morozova.domain.repositories.MovieDescriptionRepository
+import com.katerina.morozova.data.repositories.PopularMoviesRepositoryImpl
+import com.katerina.morozova.domain.repositories.PopularMoviesRepository
+import com.katerina.morozova.data.repositories.SearchPopularMoviesRepositoryImpl
+import com.katerina.morozova.domain.repositories.SearchPopularMoviesRepository
 import dagger.Module
 import dagger.Provides
 

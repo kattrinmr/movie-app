@@ -2,8 +2,8 @@ package com.katerina.morozova.di
 
 import android.app.Application
 import android.content.Context
-import com.katerina.morozova.core.api.MovieApiService
-import com.katerina.morozova.core.utils.Constant
+import com.katerina.morozova.data.api.MovieApiService
+import com.katerina.morozova.data.utils.Constant
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

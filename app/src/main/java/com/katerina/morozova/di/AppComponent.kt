@@ -1,10 +1,10 @@
 package com.katerina.morozova.di
 
 import android.app.Application
-import com.katerina.morozova.favorite_movies_screen.ui.fragments.FavoriteFragment
-import com.katerina.morozova.movie_description_screen.ui.fragments.MovieDescriptionFragment
-import com.katerina.morozova.popular_movies_screen.ui.fragments.PopularFragment
-import com.katerina.morozova.popular_movies_screen.ui.fragments.SearchPopularMoviesFragment
+import com.katerina.morozova.ui.fragments.FavoriteFragment
+import com.katerina.morozova.ui.fragments.MovieDescriptionFragment
+import com.katerina.morozova.ui.fragments.PopularFragment
+import com.katerina.morozova.ui.fragments.SearchPopularMoviesFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
