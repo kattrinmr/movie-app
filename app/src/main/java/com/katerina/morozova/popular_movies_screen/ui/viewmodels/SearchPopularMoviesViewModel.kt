@@ -14,7 +14,8 @@ class SearchPopularMoviesViewModel @Inject constructor(
     private val interactor: SearchPopularMoviesInteractor
 ) : ViewModel() {
 
-    private var _searchedMovieModelResponse = MutableLiveData<NetworkMovieResponse<List<MovieModel>>>()
+    private var _searchedMovieModelResponse =
+        MutableLiveData<NetworkMovieResponse<List<MovieModel>>>()
     val searchedMovieModelResponse: LiveData<NetworkMovieResponse<List<MovieModel>>> =
         _searchedMovieModelResponse
 

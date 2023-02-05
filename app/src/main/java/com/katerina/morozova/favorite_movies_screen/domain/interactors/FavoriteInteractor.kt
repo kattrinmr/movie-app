@@ -12,6 +12,7 @@ class FavoriteInteractor @Inject constructor(
 
     suspend fun insertMovie(movie: MovieModel) = favoriteRepository.insertMovie(movie)
     suspend fun removeMovie(movie: MovieModel) = favoriteRepository.removeMovie(movie)
-    suspend fun getAllFavoriteMovies(): Flow<RoomResponse<List<MovieModel>>> = favoriteRepository.getAllFavoriteMovies()
+    suspend fun getAllFavoriteMovies(): Flow<RoomResponse<List<MovieModel>>> =
+        favoriteRepository.getAllFavoriteMovies()
 
 }

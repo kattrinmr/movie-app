@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Morozova</string>
+    <string name="app_name">MovieApp</string>
 
     <!--Popular Fragment-->
     <string name="txt_popular">Популярные</string>

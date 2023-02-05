@@ -5,6 +5,5 @@ import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
 import kotlinx.coroutines.flow.Flow
 
 interface SearchPopularMoviesRepository {
-
     suspend fun getSearchedMovies(keyword: String): Flow<NetworkMovieResponse<List<MovieModel>>>
 }

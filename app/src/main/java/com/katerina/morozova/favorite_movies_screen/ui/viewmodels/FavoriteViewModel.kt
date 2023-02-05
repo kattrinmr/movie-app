@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.katerina.morozova.core.models.MovieModel
 import com.katerina.morozova.core.utils.responses.RoomResponse
 import com.katerina.morozova.favorite_movies_screen.domain.interactors.FavoriteInteractor
-import com.katerina.morozova.favorite_movies_screen.domain.repositories.FavoriteRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,12 +26,6 @@ class FavoriteViewModel @Inject constructor(
             interactor.getAllFavoriteMovies().collect {
                 _favoriteResponse.postValue(it)
             }
-        }
-    }
-
-    fun addMovieToFavorite(movie: MovieModel) {
-        viewModelScope.launch {
-            interactor.insertMovie(movie)
         }
     }
 

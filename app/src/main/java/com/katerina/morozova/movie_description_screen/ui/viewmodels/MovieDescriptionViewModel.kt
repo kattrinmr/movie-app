@@ -12,10 +12,12 @@ import javax.inject.Inject
 
 class MovieDescriptionViewModel @Inject constructor(
     private val interactor: MovieDescriptionInteractor
-): ViewModel() {
+) : ViewModel() {
 
-    private var _movieDescriptionResponse = MutableLiveData<NetworkMovieResponse<MovieDescriptionModel>>()
-    val movieDescriptionResponse: LiveData<NetworkMovieResponse<MovieDescriptionModel>> = _movieDescriptionResponse
+    private var _movieDescriptionResponse =
+        MutableLiveData<NetworkMovieResponse<MovieDescriptionModel>>()
+    val movieDescriptionResponse: LiveData<NetworkMovieResponse<MovieDescriptionModel>> =
+        _movieDescriptionResponse
 
     fun fetchMovieDescription(movieId: Int) {
         viewModelScope.launch {

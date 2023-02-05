@@ -72,7 +72,11 @@ class MovieDescriptionFragment : Fragment() {
                         binding.imgError.visibility = View.VISIBLE
                         binding.txtErrorUp.visibility = View.VISIBLE
                         binding.txtErrorDown.visibility = View.VISIBLE
-                    } else Toast.makeText(requireContext(), response.errorMessage, Toast.LENGTH_SHORT)
+                    } else Toast.makeText(
+                        requireContext(),
+                        response.errorMessage,
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                     binding.progressBar.isVisible = false
                 }
@@ -85,12 +89,15 @@ class MovieDescriptionFragment : Fragment() {
                         .load(response.data.posterUrl)
                         .into(binding.imgMoviePoster)
 
-                    if (response.data.nameRu == null) binding.tvMovieTitle.text = response.data.nameEn
+                    if (response.data.nameRu == null) binding.tvMovieTitle.text =
+                        response.data.nameEn
                     else binding.tvMovieTitle.text = response.data.nameRu
-                    if (response.data.description != null) binding.tvMovieDescription.text = response.data.description
-                    binding.tvMovieCountries.text = response.data.countries.joinToString(", ") { country ->
-                        country.country
-                    }
+                    if (response.data.description != null) binding.tvMovieDescription.text =
+                        response.data.description
+                    binding.tvMovieCountries.text =
+                        response.data.countries.joinToString(", ") { country ->
+                            country.country
+                        }
                     binding.tvMovieGenres.text = response.data.genres.joinToString(", ") { genre ->
                         genre.genre
                     }

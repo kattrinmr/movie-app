@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class PopularMoviesViewModel @Inject constructor(
     private val interactor: PopularMoviesInteractor
-): ViewModel() {
+) : ViewModel() {
 
     private var _movieModelResponse = MutableLiveData<NetworkMovieResponse<List<MovieModel>>>()
     val movieModelResponse: LiveData<NetworkMovieResponse<List<MovieModel>>> = _movieModelResponse

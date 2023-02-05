@@ -18,6 +18,3 @@ interface MovieDao {
     @Insert
     suspend fun insertMovie(movie: MovieEntity)
 }
-
-//@Query("SELECT * FROM movies WHERE filmId = :filmId")
-//fun getMovieByFilmId(filmId: Int): Flow<MovieEntity>
