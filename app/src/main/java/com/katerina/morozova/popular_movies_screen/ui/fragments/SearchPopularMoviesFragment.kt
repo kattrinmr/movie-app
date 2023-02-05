@@ -12,11 +12,12 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.MoviesApp
+import com.katerina.morozova.core.models.MovieModel
 import com.katerina.morozova.core.ui.adapters.MoviesAdapter
 import com.katerina.morozova.core.utils.responses.StatusResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentPopularMoviesSearchBinding
-import com.katerina.morozova.popular_movies_screen.ui.viewmodels.SearchPopularMoviesViewModel
+import com.katerina.morozova.popular_movies_screen.ui.viewmodels.MoviesViewModel
 import javax.inject.Inject
 
 class SearchPopularMoviesFragment : Fragment() {
@@ -25,8 +26,8 @@ class SearchPopularMoviesFragment : Fragment() {
     private lateinit var moviesAdapter: MoviesAdapter
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory<SearchPopularMoviesViewModel>
-    private lateinit var viewModel: SearchPopularMoviesViewModel
+    lateinit var viewModelFactory: ViewModelFactory<MoviesViewModel>
+    private lateinit var viewModel: MoviesViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -38,10 +39,15 @@ class SearchPopularMoviesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPopularMoviesSearchBinding.inflate(inflater)
-        moviesAdapter = MoviesAdapter(openMovieDescription = this::openMovieDescription)
+        moviesAdapter = MoviesAdapter(
+            openMovieDescription = this::openMovieDescription,
+            addMovieToFavorites = this::checkIfFavourite
+        )
+
         binding.rvMovies.apply {
             adapter = moviesAdapter
         }
+
         return binding.root
     }
 
@@ -95,6 +101,22 @@ class SearchPopularMoviesFragment : Fragment() {
                         }
                     }
                 }
+
+                viewModel.isFavourite.observe(viewLifecycleOwner) {
+                    it?.let { pair ->
+                        val movie = moviesAdapter.moviesList.first { movie ->
+                            movie.filmId == pair.first
+                        }
+                        val index = moviesAdapter.moviesList.indexOf(movie)
+                        val movies = moviesAdapter.moviesList.toMutableList()
+                        movies.removeAt(index)
+                        movies.add(index, movie.copy().apply { isFavorite = pair.second })
+                        moviesAdapter.updateMovies(movies)
+                        viewModel.updateSearchMovieStatus(pair.first, pair.second)
+                        viewModel.clearFavStatus()
+                    }
+                }
+
             }
 
         })
@@ -107,4 +129,9 @@ class SearchPopularMoviesFragment : Fragment() {
             )
         )
     }
+
+    private fun checkIfFavourite(movie: MovieModel): Boolean {
+        return viewModel.checkIfFavourite(movie)
+    }
+
 }

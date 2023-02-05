@@ -16,7 +16,7 @@ import com.katerina.morozova.core.utils.responses.StatusResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentPopularBinding
 import com.katerina.morozova.core.ui.adapters.MoviesAdapter
-import com.katerina.morozova.popular_movies_screen.ui.viewmodels.PopularMoviesViewModel
+import com.katerina.morozova.popular_movies_screen.ui.viewmodels.MoviesViewModel
 import javax.inject.Inject
 
 class PopularFragment : Fragment() {
@@ -25,8 +25,8 @@ class PopularFragment : Fragment() {
     private lateinit var moviesAdapter: MoviesAdapter
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory<PopularMoviesViewModel>
-    private val viewModel by activityViewModels<PopularMoviesViewModel> { viewModelFactory }
+    lateinit var viewModelFactory: ViewModelFactory<MoviesViewModel>
+    private val viewModel by activityViewModels<MoviesViewModel> { viewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,9 +43,11 @@ class PopularFragment : Fragment() {
             openMovieDescription = this::openMovieDescription,
             addMovieToFavorites = this::checkIfFavourite
         )
+
         binding.rvMovies.apply {
             adapter = moviesAdapter
         }
+
         return binding.root
     }
 

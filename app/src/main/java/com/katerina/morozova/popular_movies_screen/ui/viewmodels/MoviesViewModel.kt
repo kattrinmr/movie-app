@@ -8,22 +8,27 @@ import com.katerina.morozova.core.models.MovieModel
 import com.katerina.morozova.core.utils.responses.StatusResponse
 import com.katerina.morozova.favorite_movies_screen.domain.interactors.FavoriteInteractor
 import com.katerina.morozova.popular_movies_screen.domain.interactors.PopularMoviesInteractor
+import com.katerina.morozova.popular_movies_screen.domain.interactors.SearchPopularMoviesInteractor
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class PopularMoviesViewModel @Inject constructor(
+class MoviesViewModel @Inject constructor(
     private val popularMoviesInteractor: PopularMoviesInteractor,
-    private val favoriteInteractor: FavoriteInteractor
+    private val favoriteInteractor: FavoriteInteractor,
+    private val searchInteractor: SearchPopularMoviesInteractor
 ) : ViewModel() {
 
     private var _movieModelResponse = MutableLiveData<StatusResponse<List<MovieModel>>>()
     val movieModelResponse: LiveData<StatusResponse<List<MovieModel>>> = _movieModelResponse
+
     private var _isFavourite = MutableLiveData<Pair<Int, Boolean>?>()
-    val isFavourite: LiveData<Pair<Int, Boolean>?>
-        get() = _isFavourite
+    val isFavourite: LiveData<Pair<Int, Boolean>?> = _isFavourite
 
     private val _favoriteResponse = MutableLiveData<StatusResponse<List<MovieModel>>>()
     val favoriteResponse: LiveData<StatusResponse<List<MovieModel>>> = _favoriteResponse
+
+    private var _searchedMovieModelResponse = MutableLiveData<StatusResponse<List<MovieModel>>>()
+    val searchedMovieModelResponse: LiveData<StatusResponse<List<MovieModel>>> = _searchedMovieModelResponse
 
     init {
         fetchAllMovies()
@@ -38,9 +43,19 @@ class PopularMoviesViewModel @Inject constructor(
         }
     }
 
-    fun addMovieToFavorite(movie: MovieModel) {
+    fun fetchFavoriteMovies() {
         viewModelScope.launch {
-            popularMoviesInteractor.insertMovie(movie)
+            favoriteInteractor.getAllFavoriteMovies().collect {
+                _favoriteResponse.postValue(it)
+            }
+        }
+    }
+
+    fun fetchSearchedMovies(keyword: String) {
+        viewModelScope.launch {
+            searchInteractor.getSearchedMovies(keyword).collect {
+                _searchedMovieModelResponse.postValue(it)
+            }
         }
     }
 
@@ -59,14 +74,6 @@ class PopularMoviesViewModel @Inject constructor(
         return true
     }
 
-    fun fetchFavoriteMovies() {
-        viewModelScope.launch {
-            favoriteInteractor.getAllFavoriteMovies().collect {
-                _favoriteResponse.postValue(it)
-            }
-        }
-    }
-
     fun removeMovieFromFavorite(movie: MovieModel) {
         viewModelScope.launch {
             favoriteInteractor.removeMovie(movie)
@@ -79,6 +86,18 @@ class PopularMoviesViewModel @Inject constructor(
         when(_movieModelResponse.value as StatusResponse<List<MovieModel>>) {
             is StatusResponse.Success -> {
                 (_movieModelResponse.value as StatusResponse.Success<List<MovieModel>>)
+                    .data.first {
+                        it.filmId == movieId
+                    }.isFavorite = isFav
+            }
+            else -> {}
+        }
+    }
+
+    fun updateSearchMovieStatus(movieId: Int, isFav: Boolean) {
+        when(_searchedMovieModelResponse.value as StatusResponse<List<MovieModel>>) {
+            is StatusResponse.Success -> {
+                (_searchedMovieModelResponse.value as StatusResponse.Success<List<MovieModel>>)
                     .data.first {
                         it.filmId == movieId
                     }.isFavorite = isFav

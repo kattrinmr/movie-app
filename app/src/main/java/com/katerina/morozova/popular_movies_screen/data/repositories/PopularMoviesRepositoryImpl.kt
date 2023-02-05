@@ -17,22 +17,22 @@ class PopularMoviesRepositoryImpl @Inject constructor(
 ) : PopularMoviesRepository {
 
     // Максимальное количество страниц не соответствует значению response.pagesCount,
-    // а равно 20.
+    // а равно 20. Также я узнала, что есть библиотека Paging Library, но уже не успела внедрить
+    // в проект для лучшей оптимизации, так как ранее с ней не работала
+    // TODO: Добавить Paging Library
+
     override suspend fun getPopularMovies() = flow {
         emit(StatusResponse.Loading(true))
 
         val allMovies = mutableListOf<MovieModel>()
 
-        var response = apiService.getMovies(page = 1)
-        allMovies.addAll(response.films.onEach {
-            it.isFavorite = isFavourite(it.filmId)
-        })
-
         val maxPage = 10 // max = 20
 
-        for (i in 2..maxPage) {
-            response = apiService.getMovies(page = i)
-            allMovies.addAll(response.films)
+        for (i in 1..maxPage) {
+            val response = apiService.getMovies(page = i)
+            allMovies.addAll(response.films.onEach {
+                it.isFavorite = isFavourite(it.filmId)
+            })
         }
         emit(StatusResponse.Success(allMovies.toList()))
 
