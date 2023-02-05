@@ -2,6 +2,9 @@ package com.katerina.morozova.di
 
 import android.app.Application
 import android.content.Context
+import android.net.ConnectivityManager
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.katerina.morozova.core.api.MovieApiService
 import com.katerina.morozova.core.utils.Constant
 import dagger.Module

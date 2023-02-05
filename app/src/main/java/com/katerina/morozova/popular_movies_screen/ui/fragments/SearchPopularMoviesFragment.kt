@@ -13,7 +13,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.MoviesApp
 import com.katerina.morozova.core.ui.adapters.MoviesAdapter
-import com.katerina.morozova.core.utils.responses.NetworkResponse
+import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentPopularMoviesSearchBinding
 import com.katerina.morozova.popular_movies_screen.ui.viewmodels.SearchPopularMoviesViewModel
@@ -66,16 +66,31 @@ class SearchPopularMoviesFragment : Fragment() {
 
                 viewModel.searchedMovieModelResponse.observe(viewLifecycleOwner) {
                     when (it) {
-                        is NetworkResponse.Loading -> {
+                        is NetworkMovieResponse.Loading -> {
+                            binding.imgError.visibility = View.GONE
+                            binding.txtErrorUp.visibility = View.GONE
+                            binding.txtErrorDown.visibility = View.GONE
                             binding.progressBar.isVisible = it.isLoading
                         }
 
-                        is NetworkResponse.Failure -> {
-                            Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                        is NetworkMovieResponse.Failure -> {
+                            if (it.errorMessage == "Unable to resolve host \"kinopoiskapiunofficial.tech\": No address associated with hostname") {
+                                binding.imgError.visibility = View.VISIBLE
+                                binding.txtErrorUp.visibility = View.VISIBLE
+                                binding.txtErrorDown.visibility = View.VISIBLE
+                            } else Toast.makeText(
+                                requireContext(),
+                                it.errorMessage,
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
                             binding.progressBar.isVisible = false
                         }
 
-                        is NetworkResponse.Success -> {
+                        is NetworkMovieResponse.Success -> {
+                            binding.imgError.visibility = View.GONE
+                            binding.txtErrorUp.visibility = View.GONE
+                            binding.txtErrorDown.visibility = View.GONE
                             moviesAdapter.updateMovies(it.data)
                             binding.progressBar.isVisible = false
                         }

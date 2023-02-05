@@ -60,6 +60,60 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="?android:attr/textColorPrimary" />
 
+                    <!--Network error-->
+
+                    <ImageView
+                        android:id="@+id/img_error"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_240"
+                        android:src="@drawable/ic_error_100"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toTopOf="@id/txt_error_up"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txt_error_up"
+                        style="@style/TextView_HelpText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/spacing_16"
+                        android:paddingTop="@dimen/spacing_16"
+                        android:text="@string/txt_error_1"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/img_error" />
+
+                    <TextView
+                        android:id="@+id/txt_error_down"
+                        style="@style/TextView_HelpText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_error_2"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txt_error_up" />
+
+                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                        android:id="@+id/btn_repeat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_16"
+                        android:layout_marginBottom="@dimen/spacing_16"
+                        android:backgroundTint="@color/colorButtonEnabled"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/txt_error_repeat"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txt_error_down" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

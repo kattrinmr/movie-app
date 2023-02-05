@@ -3,7 +3,7 @@ package com.katerina.morozova.movie_description_screen.data.repositories
 import com.katerina.morozova.core.api.MovieApiService
 import com.katerina.morozova.core.models.MovieDescriptionModel
 import com.katerina.morozova.core.utils.converters.toModel
-import com.katerina.morozova.core.utils.responses.NetworkResponse
+import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
 import com.katerina.morozova.movie_description_screen.domain.repositories.MovieDescriptionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -14,12 +14,12 @@ class MovieDescriptionRepositoryImpl @Inject constructor(
     private val apiService: MovieApiService
 ) : MovieDescriptionRepository {
 
-    override suspend fun getMovieDescription(movieId: Int): Flow<NetworkResponse<MovieDescriptionModel>> =
+    override suspend fun getMovieDescription(movieId: Int): Flow<NetworkMovieResponse<MovieDescriptionModel>> =
         flow {
-            emit(NetworkResponse.Loading(true))
+            emit(NetworkMovieResponse.Loading(true))
             val response = apiService.getMovieDescription(movieId)
-            emit(NetworkResponse.Success(response.toModel()))
+            emit(NetworkMovieResponse.Success(response.toModel()))
         }.catch { e ->
-            emit(NetworkResponse.Failure(e.message ?: "Unknown error has occurred"))
+            emit(NetworkMovieResponse.Failure(e.message ?: "Unknown error has occurred"))
         }
 }

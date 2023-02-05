@@ -17,5 +17,6 @@
 
     <!--Corner radius-->
     <dimen name="round_15">15dp</dimen>
+    <dimen name="spacing_240">240dp</dimen>
 
 </resources>

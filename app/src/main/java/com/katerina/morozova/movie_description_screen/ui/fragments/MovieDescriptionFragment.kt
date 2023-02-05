@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.katerina.morozova.MoviesApp
-import com.katerina.morozova.core.utils.responses.NetworkResponse
+import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentMovieDescriptionBinding
 import com.katerina.morozova.movie_description_screen.ui.viewmodels.MovieDescriptionViewModel
@@ -59,16 +59,25 @@ class MovieDescriptionFragment : Fragment() {
 
         viewModel.movieDescriptionResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
-                is NetworkResponse.Loading -> {
+                is NetworkMovieResponse.Loading -> {
                     binding.progressBar.isVisible = response.isLoading
                 }
 
-                is NetworkResponse.Failure -> {
-                    Toast.makeText(requireContext(), response.errorMessage, Toast.LENGTH_SHORT).show()
+                is NetworkMovieResponse.Failure -> {
+                    if (response.errorMessage == "Unable to resolve host \"kinopoiskapiunofficial.tech\": No address associated with hostname") {
+                        binding.tvMovieTitle.visibility = View.GONE
+                        binding.tvMovieCountriesTitle.visibility = View.GONE
+                        binding.tvMovieGenreTitle.visibility = View.GONE
+                        binding.tvMovieYearTitle.visibility = View.GONE
+                        binding.imgError.visibility = View.VISIBLE
+                        binding.txtErrorUp.visibility = View.VISIBLE
+                        binding.txtErrorDown.visibility = View.VISIBLE
+                    } else Toast.makeText(requireContext(), response.errorMessage, Toast.LENGTH_SHORT)
+                        .show()
                     binding.progressBar.isVisible = false
                 }
 
-                is NetworkResponse.Success -> {
+                is NetworkMovieResponse.Success -> {
                     binding.progressBar.isVisible = false
 
                     Glide

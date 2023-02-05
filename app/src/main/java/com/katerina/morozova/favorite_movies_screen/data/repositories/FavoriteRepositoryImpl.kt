@@ -1,11 +1,9 @@
 package com.katerina.morozova.favorite_movies_screen.data.repositories
 
-import android.util.Log
 import com.katerina.morozova.core.models.MovieModel
 import com.katerina.morozova.core.room.daos.MovieDao
 import com.katerina.morozova.core.utils.converters.toModelFavorite
 import com.katerina.morozova.core.utils.converters.toMovieEntity
-import com.katerina.morozova.core.utils.responses.NetworkResponse
 import com.katerina.morozova.core.utils.responses.RoomResponse
 import com.katerina.morozova.favorite_movies_screen.domain.repositories.FavoriteRepository
 import kotlinx.coroutines.flow.*

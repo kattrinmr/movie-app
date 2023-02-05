@@ -11,7 +11,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.MoviesApp
 import com.katerina.morozova.core.models.MovieModel
-import com.katerina.morozova.core.utils.responses.NetworkResponse
+import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentPopularBinding
 import com.katerina.morozova.core.ui.adapters.MoviesAdapter
@@ -37,6 +37,7 @@ class PopularFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPopularBinding.inflate(inflater)
+
         moviesAdapter = MoviesAdapter(
             openMovieDescription = this::openMovieDescription,
             addMovieToFavorites = this::addMovieToFavorites
@@ -49,6 +50,7 @@ class PopularFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel = viewModelFactory.getViewModel(this)
 
         binding.btnFavorites.setOnClickListener {
@@ -61,20 +63,26 @@ class PopularFragment : Fragment() {
 
         viewModel.movieModelResponse.observe(viewLifecycleOwner) {
             when (it) {
-                is NetworkResponse.Loading -> {
+                is NetworkMovieResponse.Loading -> {
                     binding.progressBar.isVisible = it.isLoading
                 }
 
-                is NetworkResponse.Failure -> {
-                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                is NetworkMovieResponse.Failure -> {
+                    if (it.errorMessage == "Unable to resolve host \"kinopoiskapiunofficial.tech\": No address associated with hostname") {
+                        binding.imgError.visibility = View.VISIBLE
+                        binding.txtErrorUp.visibility = View.VISIBLE
+                        binding.txtErrorDown.visibility = View.VISIBLE
+                    } else Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT)
+                        .show()
                     binding.progressBar.isVisible = false
                 }
 
-                is NetworkResponse.Success -> {
+                is NetworkMovieResponse.Success -> {
                     moviesAdapter.updateMovies(it.data)
                     binding.progressBar.isVisible = false
                 }
             }
+
         }
     }
 
