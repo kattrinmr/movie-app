@@ -13,6 +13,7 @@ fun MovieEntity.toModelFavorite(): MovieModel {
         year = this.year,
         genres = this.genres,
         posterUrl = this.posterUrl,
+        posterUrlPreview = this.posterUrlPreview,
         description = this.description,
         countries = this.countries,
         isFavorite = true
@@ -28,6 +29,7 @@ fun MovieModel.toMovieEntity(): MovieEntity {
         countries = this.countries,
         genres = this.genres,
         posterUrl = this.posterUrl,
+        posterUrlPreview = this.posterUrlPreview,
         description = this.description,
         isFavorite = this.isFavorite
     )

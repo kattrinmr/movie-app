@@ -90,7 +90,7 @@ class MoviesAdapter(
 
                 Glide
                     .with(imgMovie.context)
-                    .load(movie.posterUrl)
+                    .load(movie.posterUrlPreview)
                     .centerCrop()
                     .into(imgMovie)
 

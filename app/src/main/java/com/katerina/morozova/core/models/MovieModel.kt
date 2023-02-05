@@ -9,5 +9,6 @@ data class MovieModel(
     val countries: List<CountryModel>,
     val description: String?,
     val posterUrl: String,
+    val posterUrlPreview: String,
     val isFavorite: Boolean = false
 )

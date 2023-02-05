@@ -30,6 +30,7 @@
             style="@style/TextView_MainText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_movie"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,8 +39,10 @@
         <TextView
             android:id="@+id/tv_movie_description"
             style="@style/TextView_SubText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_movie"
             app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
             tools:text="@tools:sample/lorem/random" />

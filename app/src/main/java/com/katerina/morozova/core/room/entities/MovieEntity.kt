@@ -15,6 +15,7 @@ data class MovieEntity(
     val nameRu: String?,
     val nameEn: String?,
     val posterUrl: String,
+    val posterUrlPreview: String,
     val year: String,
     val description: String?,
     val isFavorite: Boolean,
