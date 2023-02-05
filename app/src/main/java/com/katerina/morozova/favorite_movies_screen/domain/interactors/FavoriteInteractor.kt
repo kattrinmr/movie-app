@@ -1,18 +1,15 @@
 package com.katerina.morozova.favorite_movies_screen.domain.interactors
 
 import com.katerina.morozova.core.models.MovieModel
-import com.katerina.morozova.core.utils.responses.RoomResponse
-import com.katerina.morozova.favorite_movies_screen.domain.repositories.FavoriteRepository
+import com.katerina.morozova.core.utils.responses.StatusResponse
+import com.katerina.morozova.popular_movies_screen.domain.repositories.PopularMoviesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class FavoriteInteractor @Inject constructor(
-    private val favoriteRepository: FavoriteRepository
+    private val popularMoviesRepository: PopularMoviesRepository
 ) {
-
-    suspend fun insertMovie(movie: MovieModel) = favoriteRepository.insertMovie(movie)
-    suspend fun removeMovie(movie: MovieModel) = favoriteRepository.removeMovie(movie)
-    suspend fun getAllFavoriteMovies(): Flow<RoomResponse<List<MovieModel>>> =
-        favoriteRepository.getAllFavoriteMovies()
-
+    suspend fun removeMovie(movie: MovieModel) = popularMoviesRepository.removeMovie(movie)
+    suspend fun getAllFavoriteMovies(): Flow<StatusResponse<List<MovieModel>>> =
+        popularMoviesRepository.getAllFavoriteMovies()
 }

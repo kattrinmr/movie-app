@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.katerina.morozova.core.models.MovieDescriptionModel
-import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
+import com.katerina.morozova.core.utils.responses.StatusResponse
 import com.katerina.morozova.movie_description_screen.domain.interactors.MovieDescriptionInteractor
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,8 +15,8 @@ class MovieDescriptionViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _movieDescriptionResponse =
-        MutableLiveData<NetworkMovieResponse<MovieDescriptionModel>>()
-    val movieDescriptionResponse: LiveData<NetworkMovieResponse<MovieDescriptionModel>> =
+        MutableLiveData<StatusResponse<MovieDescriptionModel>>()
+    val movieDescriptionResponse: LiveData<StatusResponse<MovieDescriptionModel>> =
         _movieDescriptionResponse
 
     fun fetchMovieDescription(movieId: Int) {

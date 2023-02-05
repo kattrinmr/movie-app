@@ -9,12 +9,12 @@ interface MovieDao {
     @Query("SELECT * FROM movies")
     fun getAllMovies(): Flow<List<MovieEntity>>
 
-    @Query("SELECT * FROM movies")
-    fun getAllMoviesList(): List<MovieEntity>
-
-    @Delete
-    suspend fun deleteMovie(movie: MovieEntity)
+    @Query("DELETE FROM movies WHERE filmId = :movieId")
+    suspend fun deleteMovie(movieId: Int)
 
     @Insert
     suspend fun insertMovie(movie: MovieEntity)
+
+    @Query("SELECT EXISTS(SELECT * FROM movies WHERE filmId = :filmId)")
+    suspend fun isFavourite(filmId: Int): Boolean
 }

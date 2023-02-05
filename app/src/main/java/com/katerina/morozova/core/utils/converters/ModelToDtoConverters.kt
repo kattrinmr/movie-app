@@ -35,7 +35,7 @@ fun MovieModel.toMovieEntity(): MovieEntity {
     )
 }
 
-fun MovieDescriptionResponse.toModel(): MovieDescriptionModel {
+fun MovieDescriptionResponse.toMovieDescriptionModel(): MovieDescriptionModel {
     return MovieDescriptionModel(
         this.filmId,
         this.nameRu,

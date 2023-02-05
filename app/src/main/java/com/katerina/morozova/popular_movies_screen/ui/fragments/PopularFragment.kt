@@ -8,10 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.MoviesApp
 import com.katerina.morozova.core.models.MovieModel
-import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
+import com.katerina.morozova.core.utils.responses.StatusResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentPopularBinding
 import com.katerina.morozova.core.ui.adapters.MoviesAdapter
@@ -25,7 +26,7 @@ class PopularFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory<PopularMoviesViewModel>
-    private lateinit var viewModel: PopularMoviesViewModel
+    private val viewModel by activityViewModels<PopularMoviesViewModel> { viewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -40,7 +41,7 @@ class PopularFragment : Fragment() {
 
         moviesAdapter = MoviesAdapter(
             openMovieDescription = this::openMovieDescription,
-            addMovieToFavorites = this::addMovieToFavorites
+            addMovieToFavorites = this::checkIfFavourite
         )
         binding.rvMovies.apply {
             adapter = moviesAdapter
@@ -50,8 +51,6 @@ class PopularFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = viewModelFactory.getViewModel(this)
 
         binding.btnFavorites.setOnClickListener {
             findNavController().navigate(PopularFragmentDirections.actionPopularFragmentToFavoriteFragment())
@@ -63,11 +62,11 @@ class PopularFragment : Fragment() {
 
         viewModel.movieModelResponse.observe(viewLifecycleOwner) {
             when (it) {
-                is NetworkMovieResponse.Loading -> {
+                is StatusResponse.Loading -> {
                     binding.progressBar.isVisible = it.isLoading
                 }
 
-                is NetworkMovieResponse.Failure -> {
+                is StatusResponse.Failure -> {
                     if (it.errorMessage == "Unable to resolve host \"kinopoiskapiunofficial.tech\": No address associated with hostname") {
                         binding.imgError.visibility = View.VISIBLE
                         binding.txtErrorUp.visibility = View.VISIBLE
@@ -77,12 +76,26 @@ class PopularFragment : Fragment() {
                     binding.progressBar.isVisible = false
                 }
 
-                is NetworkMovieResponse.Success -> {
+                is StatusResponse.Success -> {
                     moviesAdapter.updateMovies(it.data)
                     binding.progressBar.isVisible = false
                 }
             }
 
+        }
+        viewModel.isFavourite.observe(viewLifecycleOwner) {
+            it?.let { pair ->
+                val movie = moviesAdapter.moviesList.first { movie ->
+                    movie.filmId == pair.first
+                }
+                val index = moviesAdapter.moviesList.indexOf(movie)
+                val movies = moviesAdapter.moviesList.toMutableList()
+                movies.removeAt(index)
+                movies.add(index, movie.copy().apply { isFavorite = pair.second })
+                moviesAdapter.updateMovies(movies)
+                viewModel.updateMovieStatus(pair.first, pair.second)
+                viewModel.clearFavStatus()
+            }
         }
     }
 
@@ -92,7 +105,7 @@ class PopularFragment : Fragment() {
         )
     }
 
-    private fun addMovieToFavorites(movie: MovieModel) {
-        viewModel.addMovieToFavorite(movie)
+    private fun checkIfFavourite(movie: MovieModel): Boolean {
+        return viewModel.checkIfFavourite(movie)
     }
 }

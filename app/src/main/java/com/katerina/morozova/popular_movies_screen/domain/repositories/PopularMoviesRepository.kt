@@ -1,11 +1,13 @@
 package com.katerina.morozova.popular_movies_screen.domain.repositories
 
 import com.katerina.morozova.core.models.MovieModel
-import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
+import com.katerina.morozova.core.utils.responses.StatusResponse
 import kotlinx.coroutines.flow.Flow
 
 interface PopularMoviesRepository {
-
-    suspend fun getPopularMovies(): Flow<NetworkMovieResponse<List<MovieModel>>>
-
+    suspend fun getPopularMovies(): Flow<StatusResponse<List<MovieModel>>>
+    suspend fun insertMovie(movie: MovieModel)
+    suspend fun removeMovie(movie: MovieModel)
+    suspend fun getAllFavoriteMovies(): Flow<StatusResponse<List<MovieModel>>>
+    suspend fun isFavourite(movieId: Int): Boolean
 }

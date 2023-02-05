@@ -10,5 +10,5 @@ data class MovieModel(
     val description: String?,
     val posterUrl: String,
     val posterUrlPreview: String,
-    val isFavorite: Boolean = false
+    var isFavorite: Boolean
 )

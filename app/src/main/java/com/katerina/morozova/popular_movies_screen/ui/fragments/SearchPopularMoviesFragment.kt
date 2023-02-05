@@ -13,12 +13,11 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.MoviesApp
 import com.katerina.morozova.core.ui.adapters.MoviesAdapter
-import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
+import com.katerina.morozova.core.utils.responses.StatusResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentPopularMoviesSearchBinding
 import com.katerina.morozova.popular_movies_screen.ui.viewmodels.SearchPopularMoviesViewModel
 import javax.inject.Inject
-
 
 class SearchPopularMoviesFragment : Fragment() {
 
@@ -66,14 +65,14 @@ class SearchPopularMoviesFragment : Fragment() {
 
                 viewModel.searchedMovieModelResponse.observe(viewLifecycleOwner) {
                     when (it) {
-                        is NetworkMovieResponse.Loading -> {
+                        is StatusResponse.Loading -> {
                             binding.imgError.visibility = View.GONE
                             binding.txtErrorUp.visibility = View.GONE
                             binding.txtErrorDown.visibility = View.GONE
                             binding.progressBar.isVisible = it.isLoading
                         }
 
-                        is NetworkMovieResponse.Failure -> {
+                        is StatusResponse.Failure -> {
                             if (it.errorMessage == "Unable to resolve host \"kinopoiskapiunofficial.tech\": No address associated with hostname") {
                                 binding.imgError.visibility = View.VISIBLE
                                 binding.txtErrorUp.visibility = View.VISIBLE
@@ -87,7 +86,7 @@ class SearchPopularMoviesFragment : Fragment() {
                             binding.progressBar.isVisible = false
                         }
 
-                        is NetworkMovieResponse.Success -> {
+                        is StatusResponse.Success -> {
                             binding.imgError.visibility = View.GONE
                             binding.txtErrorUp.visibility = View.GONE
                             binding.txtErrorDown.visibility = View.GONE

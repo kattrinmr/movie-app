@@ -1,7 +1,5 @@
 package com.katerina.morozova.di
 
-import com.katerina.morozova.favorite_movies_screen.data.repositories.FavoriteRepositoryImpl
-import com.katerina.morozova.favorite_movies_screen.domain.repositories.FavoriteRepository
 import com.katerina.morozova.movie_description_screen.data.repositories.MovieDescriptionRepositoryImpl
 import com.katerina.morozova.movie_description_screen.domain.repositories.MovieDescriptionRepository
 import com.katerina.morozova.popular_movies_screen.data.repositories.PopularMoviesRepositoryImpl
@@ -25,8 +23,4 @@ class RepositoriesModule {
     @Provides
     fun provideSearchMoviesRepository(repositoryImpl: SearchPopularMoviesRepositoryImpl):
             SearchPopularMoviesRepository = repositoryImpl
-
-    @Provides
-    fun provideFavoriteRepository(repositoryImpl: FavoriteRepositoryImpl):
-            FavoriteRepository = repositoryImpl
 }

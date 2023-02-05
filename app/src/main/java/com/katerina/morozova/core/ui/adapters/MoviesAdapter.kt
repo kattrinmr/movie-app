@@ -14,15 +14,11 @@ class MoviesAdapter(
     private val openMovieDescription: (movieId: String) -> Unit = { movieId ->
         Log.d("MovieAdapter:", "Open $movieId")
     },
-    private val addMovieToFavorites: (movie: MovieModel) -> Unit = { movie ->
+    private val addMovieToFavorites: (movie: MovieModel) -> Boolean = { movie ->
         Log.d("MovieAdapter:", "The movie with id = ${movie.filmId} has been added to favorites")
+        true
     },
-    private val removeMovieFromFavorites: (movie: MovieModel) -> Unit = { movie ->
-        Log.d(
-            "MovieAdapter:",
-            "The movie with id = ${movie.filmId} has been removed from favorites"
-        )
-    }
+    private val removeMovieFromFavorites: ((movie: MovieModel) -> Unit)? = null
 ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     var moviesList = mutableListOf<MovieModel>()
@@ -39,7 +35,8 @@ class MoviesAdapter(
 
             override fun areContentsTheSame(oldPosition: Int, newPosition: Int): Boolean {
                 return (moviesList[oldPosition].filmId == movies[newPosition].filmId
-                        && moviesList[oldPosition].posterUrl == movies[newPosition].posterUrl)
+                        && moviesList[oldPosition].posterUrl == movies[newPosition].posterUrl
+                        && moviesList[oldPosition].isFavorite == movies[newPosition].isFavorite)
             }
         }
 
@@ -73,8 +70,8 @@ class MoviesAdapter(
     inner class PopularMovieViewHolder(
         private val binding: ItemMovieBinding,
         private val open: (movieId: String) -> Unit,
-        private val removeMovieFromFavorites: (movie: MovieModel) -> Unit,
-        private val addMovieToFavorites: (movie: MovieModel) -> Unit
+        private val addMovieToFavorites: (movie: MovieModel) -> Boolean,
+        private val removeMovieFromFavorites: ((movie: MovieModel) -> Unit)? = null,
     ) : MovieViewHolder(binding.root) {
 
         override fun bind(
@@ -84,6 +81,12 @@ class MoviesAdapter(
             with(binding) {
                 if (movie.nameRu == null) tvMovieTitle.text = movie.nameEn
                 else tvMovieTitle.text = movie.nameRu
+
+                if (movie.isFavorite) {
+                    imgFavorite.visibility = View.VISIBLE
+                } else {
+                    imgFavorite.visibility = View.GONE
+                }
 
                 tvMovieDescription.text =
                     "${movie.genres.joinToString(", ") { it.genre }} (${movie.year})"
@@ -99,13 +102,9 @@ class MoviesAdapter(
                 }
 
                 root.setOnLongClickListener {
-                    if (movie.isFavorite) {
-                        imgFavorite.visibility = View.VISIBLE
-                        addMovieToFavorites(movie)
-                    } else {
-                        imgFavorite.visibility = View.GONE
-                        removeMovieFromFavorites(movie)
-                    }
+                    if (removeMovieFromFavorites != null) {
+                        removeMovieFromFavorites?.let { it1 -> it1(movie) }
+                    } else addMovieToFavorites(movie)
                     true
                 }
             }

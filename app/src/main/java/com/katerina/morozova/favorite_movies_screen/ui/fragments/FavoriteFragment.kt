@@ -8,14 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.MoviesApp
 import com.katerina.morozova.core.models.MovieModel
 import com.katerina.morozova.core.ui.adapters.MoviesAdapter
 import com.katerina.morozova.core.utils.ViewModelFactory
-import com.katerina.morozova.core.utils.responses.RoomResponse
+import com.katerina.morozova.core.utils.responses.StatusResponse
 import com.katerina.morozova.databinding.FragmentFavoriteBinding
-import com.katerina.morozova.favorite_movies_screen.ui.viewmodels.FavoriteViewModel
+import com.katerina.morozova.popular_movies_screen.ui.viewmodels.PopularMoviesViewModel
 import javax.inject.Inject
 
 class FavoriteFragment : Fragment() {
@@ -24,8 +25,8 @@ class FavoriteFragment : Fragment() {
     private lateinit var moviesAdapter: MoviesAdapter
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory<FavoriteViewModel>
-    private lateinit var viewModel: FavoriteViewModel
+    lateinit var viewModelFactory: ViewModelFactory<PopularMoviesViewModel>
+    private val viewModel by activityViewModels<PopularMoviesViewModel> { viewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,7 +50,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = viewModelFactory.getViewModel(this)
+        //viewModel = viewModelFactory.getViewModel(this)
 
         binding.btnPopulars.setOnClickListener {
             findNavController().popBackStack()
@@ -57,16 +58,16 @@ class FavoriteFragment : Fragment() {
 
         viewModel.favoriteResponse.observe(viewLifecycleOwner) {
             when (it) {
-                is RoomResponse.Loading -> {
+                is StatusResponse.Loading -> {
                     binding.progressBar.isVisible = it.isLoading
                 }
 
-                is RoomResponse.Failure -> {
+                is StatusResponse.Failure -> {
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     binding.progressBar.isVisible = false
                 }
 
-                is RoomResponse.Success -> {
+                is StatusResponse.Success -> {
                     moviesAdapter.updateMovies(it.data)
                     binding.progressBar.isVisible = false
                 }
@@ -83,7 +84,6 @@ class FavoriteFragment : Fragment() {
     private fun removeMovieFromFavorites(movie: MovieModel) {
         viewModel.removeMovieFromFavorite(movie)
         viewModel.fetchFavoriteMovies()
-
     }
 
 }

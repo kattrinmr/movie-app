@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.katerina.morozova.core.models.MovieModel
-import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
+import com.katerina.morozova.core.utils.responses.StatusResponse
 import com.katerina.morozova.popular_movies_screen.domain.interactors.SearchPopularMoviesInteractor
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,8 +15,8 @@ class SearchPopularMoviesViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _searchedMovieModelResponse =
-        MutableLiveData<NetworkMovieResponse<List<MovieModel>>>()
-    val searchedMovieModelResponse: LiveData<NetworkMovieResponse<List<MovieModel>>> =
+        MutableLiveData<StatusResponse<List<MovieModel>>>()
+    val searchedMovieModelResponse: LiveData<StatusResponse<List<MovieModel>>> =
         _searchedMovieModelResponse
 
     fun fetchSearchedMovies(keyword: String) {

@@ -4,18 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.katerina.morozova.MoviesApp
-import com.katerina.morozova.core.utils.responses.NetworkMovieResponse
+import com.katerina.morozova.core.utils.responses.StatusResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentMovieDescriptionBinding
 import com.katerina.morozova.movie_description_screen.ui.viewmodels.MovieDescriptionViewModel
@@ -40,7 +40,7 @@ class MovieDescriptionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMovieDescriptionBinding.inflate(inflater)
         movieId = args.movieId
         return binding.root
@@ -50,7 +50,7 @@ class MovieDescriptionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = viewModelFactory.getViewModel(this)
-        Log.d("MovieDescription", movieId)
+//        Log.d("MovieDescription", movieId)
         viewModel.fetchMovieDescription(movieId.toInt())
 
         binding.btnBack.setOnClickListener {
@@ -59,11 +59,11 @@ class MovieDescriptionFragment : Fragment() {
 
         viewModel.movieDescriptionResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
-                is NetworkMovieResponse.Loading -> {
+                is StatusResponse.Loading -> {
                     binding.progressBar.isVisible = response.isLoading
                 }
 
-                is NetworkMovieResponse.Failure -> {
+                is StatusResponse.Failure -> {
                     if (response.errorMessage == "Unable to resolve host \"kinopoiskapiunofficial.tech\": No address associated with hostname") {
                         binding.tvMovieTitle.visibility = View.GONE
                         binding.tvMovieCountriesTitle.visibility = View.GONE
@@ -81,7 +81,7 @@ class MovieDescriptionFragment : Fragment() {
                     binding.progressBar.isVisible = false
                 }
 
-                is NetworkMovieResponse.Success -> {
+                is StatusResponse.Success -> {
                     binding.progressBar.isVisible = false
 
                     Glide
@@ -104,17 +104,35 @@ class MovieDescriptionFragment : Fragment() {
                     binding.tvMovieYear.text = response.data.year
 
                     binding.btnKp.setOnClickListener {
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data = Uri.parse(response.data.webUrl)
-                        startActivity(intent)
+                        val options = arrayOf("Открыть в браузере", "Поделиться ссылкой")
+                        val builder = AlertDialog.Builder(requireActivity())
+
+                        builder.setTitle("Выберите")
+                        builder.setItems(options) { _, it ->
+                            when (it) {
+
+                                0 -> {
+                                    val intent = Intent(Intent.ACTION_VIEW)
+                                    intent.data = Uri.parse(response.data.webUrl)
+                                    startActivity(intent)
+                                }
+
+                                1 -> {
+                                    val sendIntent: Intent = Intent().apply {
+                                        action = Intent.ACTION_SEND
+                                        putExtra(Intent.EXTRA_TEXT, response.data.webUrl)
+                                        type = "text/plain"
+                                    }
+                                    startActivity(Intent.createChooser(sendIntent,"Поделиться с помощью")
+                                    )
+                                }
+                            }
+                        }
+                        builder.show()
                     }
                 }
 
             }
         }
-
-
     }
-
-
 }

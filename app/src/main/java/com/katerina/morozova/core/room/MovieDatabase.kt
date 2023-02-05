@@ -11,7 +11,5 @@ import com.katerina.morozova.core.room.entities.MovieEntity
 @Database(entities = [MovieEntity::class], version = 1)
 @TypeConverters(CountryModelTypeConverter::class, GenreModelTypeConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
-
     abstract fun movieDao(): MovieDao
-
 }
