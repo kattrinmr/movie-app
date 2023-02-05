@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.katerina.morozova.core.models.MovieModel
-import com.katerina.morozova.core.utils.NetworkResponse
+import com.katerina.morozova.core.utils.responses.NetworkResponse
 import com.katerina.morozova.popular_movies_screen.domain.interactors.SearchPopularMoviesInteractor
 import kotlinx.coroutines.launch
 import javax.inject.Inject

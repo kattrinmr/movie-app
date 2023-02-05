@@ -13,7 +13,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.MoviesApp
 import com.katerina.morozova.core.ui.adapters.MoviesAdapter
-import com.katerina.morozova.core.utils.NetworkResponse
+import com.katerina.morozova.core.utils.responses.NetworkResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentPopularMoviesSearchBinding
 import com.katerina.morozova.popular_movies_screen.ui.viewmodels.SearchPopularMoviesViewModel

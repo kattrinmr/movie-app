@@ -1,6 +1,8 @@
 package com.katerina.morozova.movie_description_screen.ui.fragments
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.katerina.morozova.MoviesApp
-import com.katerina.morozova.core.utils.NetworkResponse
+import com.katerina.morozova.core.utils.responses.NetworkResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentMovieDescriptionBinding
 import com.katerina.morozova.movie_description_screen.ui.viewmodels.MovieDescriptionViewModel
@@ -55,14 +57,14 @@ class MovieDescriptionFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        viewModel.movieDescriptionResponse.observe(viewLifecycleOwner) {
-            when (it) {
+        viewModel.movieDescriptionResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is NetworkResponse.Loading -> {
-                    binding.progressBar.isVisible = it.isLoading
+                    binding.progressBar.isVisible = response.isLoading
                 }
 
                 is NetworkResponse.Failure -> {
-                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), response.errorMessage, Toast.LENGTH_SHORT).show()
                     binding.progressBar.isVisible = false
                 }
 
@@ -71,20 +73,25 @@ class MovieDescriptionFragment : Fragment() {
 
                     Glide
                         .with(binding.imgMoviePoster.context)
-                        .load(it.data.posterUrl)
-                        .centerCrop()
+                        .load(response.data.posterUrl)
                         .into(binding.imgMoviePoster)
 
-                    if (it.data.nameRu == null) binding.tvMovieTitle.text = it.data.nameEn
-                    else binding.tvMovieTitle.text = it.data.nameRu
-                    if (it.data.description != null) binding.tvMovieDescription.text = it.data.description
-                    binding.tvMovieCountries.text = it.data.countries.joinToString(", ") { country ->
+                    if (response.data.nameRu == null) binding.tvMovieTitle.text = response.data.nameEn
+                    else binding.tvMovieTitle.text = response.data.nameRu
+                    if (response.data.description != null) binding.tvMovieDescription.text = response.data.description
+                    binding.tvMovieCountries.text = response.data.countries.joinToString(", ") { country ->
                         country.country
                     }
-                    binding.tvMovieGenres.text = it.data.genres.joinToString(", ") { genre ->
+                    binding.tvMovieGenres.text = response.data.genres.joinToString(", ") { genre ->
                         genre.genre
                     }
-                    binding.tvMovieYear.text = it.data.year
+                    binding.tvMovieYear.text = response.data.year
+
+                    binding.btnKp.setOnClickListener {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(response.data.webUrl)
+                        startActivity(intent)
+                    }
                 }
 
             }

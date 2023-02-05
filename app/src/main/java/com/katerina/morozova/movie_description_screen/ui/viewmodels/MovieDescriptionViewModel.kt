@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.katerina.morozova.core.models.MovieDescriptionModel
-import com.katerina.morozova.core.utils.NetworkResponse
+import com.katerina.morozova.core.utils.responses.NetworkResponse
 import com.katerina.morozova.movie_description_screen.domain.interactors.MovieDescriptionInteractor
 import kotlinx.coroutines.launch
 import javax.inject.Inject

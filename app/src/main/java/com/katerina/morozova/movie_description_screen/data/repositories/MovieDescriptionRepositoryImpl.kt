@@ -2,8 +2,8 @@ package com.katerina.morozova.movie_description_screen.data.repositories
 
 import com.katerina.morozova.core.api.MovieApiService
 import com.katerina.morozova.core.models.MovieDescriptionModel
-import com.katerina.morozova.core.utils.NetworkResponse
-import com.katerina.morozova.core.utils.toModel
+import com.katerina.morozova.core.utils.converters.toModel
+import com.katerina.morozova.core.utils.responses.NetworkResponse
 import com.katerina.morozova.movie_description_screen.domain.repositories.MovieDescriptionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

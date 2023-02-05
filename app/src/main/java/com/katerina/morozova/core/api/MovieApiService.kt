@@ -1,8 +1,8 @@
 package com.katerina.morozova.core.api
 
-import com.katerina.morozova.core.utils.MovieDescriptionResponse
-import com.katerina.morozova.core.utils.MovieResponse
-import com.katerina.morozova.core.utils.SearchMovieResponse
+import com.katerina.morozova.core.utils.responses.MovieDescriptionResponse
+import com.katerina.morozova.core.utils.responses.MovieResponse
+import com.katerina.morozova.core.utils.responses.SearchMovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

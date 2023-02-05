@@ -1,4 +1,4 @@
-package com.katerina.morozova.core.utils
+package com.katerina.morozova.core.utils.responses
 
 sealed class NetworkResponse<T> {
     data class Loading<T>(val isLoading: Boolean) : NetworkResponse<T>()

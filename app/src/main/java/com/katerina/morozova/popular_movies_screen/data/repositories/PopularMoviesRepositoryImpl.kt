@@ -2,7 +2,7 @@ package com.katerina.morozova.popular_movies_screen.data.repositories
 
 import com.katerina.morozova.core.api.MovieApiService
 import com.katerina.morozova.core.models.MovieModel
-import com.katerina.morozova.core.utils.NetworkResponse
+import com.katerina.morozova.core.utils.responses.NetworkResponse
 import com.katerina.morozova.popular_movies_screen.domain.repositories.PopularMoviesRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow

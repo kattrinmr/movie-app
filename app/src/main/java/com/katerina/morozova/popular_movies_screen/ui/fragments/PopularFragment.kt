@@ -10,7 +10,8 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.katerina.morozova.MoviesApp
-import com.katerina.morozova.core.utils.NetworkResponse
+import com.katerina.morozova.core.models.MovieModel
+import com.katerina.morozova.core.utils.responses.NetworkResponse
 import com.katerina.morozova.core.utils.ViewModelFactory
 import com.katerina.morozova.databinding.FragmentPopularBinding
 import com.katerina.morozova.core.ui.adapters.MoviesAdapter
@@ -36,7 +37,10 @@ class PopularFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPopularBinding.inflate(inflater)
-        moviesAdapter = MoviesAdapter(openMovieDescription = this::openMovieDescription)
+        moviesAdapter = MoviesAdapter(
+            openMovieDescription = this::openMovieDescription,
+            addMovieToFavorites = this::addMovieToFavorites
+        )
         binding.rvMovies.apply {
             adapter = moviesAdapter
         }
@@ -78,5 +82,9 @@ class PopularFragment : Fragment() {
         findNavController().navigate(
             PopularFragmentDirections.actionPopularFragmentToMovieDescriptionFragment2(movieId)
         )
+    }
+
+    private fun addMovieToFavorites(movie: MovieModel) {
+        viewModel.addMovieToFavorite(movie)
     }
 }

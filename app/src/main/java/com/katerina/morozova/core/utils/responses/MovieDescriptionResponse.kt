@@ -1,4 +1,4 @@
-package com.katerina.morozova.core.utils
+package com.katerina.morozova.core.utils.responses
 
 import com.katerina.morozova.core.models.CountryModel
 import com.katerina.morozova.core.models.GenreModel
@@ -8,6 +8,7 @@ data class MovieDescriptionResponse(
     val nameRu: String? = null,
     val nameEn: String? = null,
     val posterUrl: String,
+    val webUrl: String,
     val year: String,
     val description: String? = null,
     val countries: List<CountryModel>,

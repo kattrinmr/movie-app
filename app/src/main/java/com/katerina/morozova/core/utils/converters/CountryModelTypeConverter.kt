@@ -1,4 +1,4 @@
-package com.katerina.morozova.core.room.entities
+package com.katerina.morozova.core.utils.converters
 
 import androidx.room.TypeConverter
 import com.katerina.morozova.core.models.CountryModel
